@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Sidebar Extension",
+  "version": "1.0",
+  "description": "A sidebar extension that only works on YouTube.",
+  "permissions": ["sidePanel"],
+  "host_permissions": ["https://www.youtube.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidebar.html"
+  },
+  "action": {
+    "default_title": "Toggle Sidebar"
+  }
+}
