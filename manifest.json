@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "YouTube Sidebar Extension",
-  "version": "1.0",
-  "description": "A sidebar extension that only works on YouTube.",
-  "permissions": ["sidePanel"],
+  "version": "2.0",
+  "description": "A sidebar extension that only works on YouTube. It extracts the timestamp of the video dynmaically",
+  "permissions": ["sidePanel", "scripting", "activeTab", "storage"],
   "host_permissions": ["https://www.youtube.com/*"],
   "background": {
     "service_worker": "background.js"
@@ -13,5 +13,11 @@
   },
   "action": {
     "default_title": "Toggle Sidebar"
+  },
+  "content_scripts": [
+  {
+    "matches": ["*://www.youtube.com/watch*"],
+    "js": ["content.js"]
   }
+]
 }
