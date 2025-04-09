@@ -1,10 +1,17 @@
 chrome.action.onClicked.addListener((tab) => {
-  if (tab.url && tab.url.includes("youtube.com/watch")) {
-    console.log("Opening the sidebar...");
-    chrome.sidePanel.open({ tabId: tab.id });
-  } else {
-    console.log("This sidebar only works on YouTube video pages.");
+  if (!tab || !tab.url.includes('youtube.com/watch')) {
+    console.log('This sidebar only works on YouTube video pages.');
+    return;
   }
+ 
+  // User‑gesture‑safe: open the side‑panel immediately
+  chrome.sidePanel.open({ tabId: tab.id });
+ 
+  // Inject content.js *afterwards* (no await → still allowed)
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    files: ['content.js']
+  }).catch(err => console.error(err));
 });
 
 // Listen for timestamp updates from content.js
