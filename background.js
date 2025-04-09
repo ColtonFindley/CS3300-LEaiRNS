@@ -18,8 +18,5 @@ chrome.action.onClicked.addListener((tab) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "UPDATE_TIMESTAMP") {
     console.log(`Updated timestamp received: ${message.timestamp}`);
-    
-    // Store the latest timestamp in Chrome's storage
-    chrome.storage.local.set({ lastTimestamp: message.timestamp });
   }
 });
