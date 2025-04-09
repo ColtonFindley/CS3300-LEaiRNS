@@ -1,10 +1,11 @@
-function sendTimestampUpdate() {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.command === "getCurrentTime") {
     const videoElement = document.querySelector("video");
     if (videoElement) {
-      const timestamp = Math.floor(videoElement.currentTime);
-      chrome.runtime.sendMessage({ type: "UPDATE_TIMESTAMP", timestamp });
+      const tmsp = Math.floor(videoElement.currentTime);
+      chrome.runtime.sendMessage({ type: "UPDATE_TIMESTAMP", timestamp: tmsp });
+    }else{
+      chrome.runtime.sendMessage({ type: "UPDATE_TIMESTAMP", timestamp: "none" });
     }
   }
-  
-// Continuously check for updates every second
-setInterval(sendTimestampUpdate, 1000);  
+});
