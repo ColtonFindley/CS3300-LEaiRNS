@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "YouTube Sidebar Extension",
-  "version": "3.0",
-  "description": "A sidebar extension that only works on YouTube. It extracts the timestamp on the click of a button",
-  "permissions": ["sidePanel", "scripting", "activeTab", "storage", "tabs"],
+  "version": "4.0",
+  "description": "A sidebar extension that only works on YouTube. It extracts the timestamp on the click of a button. Implemented toggle button for the side panel. Fixed the navigation.",
+  "permissions": ["sidePanel", "scripting", "activeTab", "storage", "tabs", "webNavigation"],
   "host_permissions": ["https://www.youtube.com/*"],
   "background": {
     "service_worker": "background.js"
@@ -13,11 +13,5 @@
   },
   "action": {
     "default_title": "Toggle Sidebar"
-  },
-  "content_scripts": [
-  {
-    "matches": ["*://*.youtube.com/watch*"],
-    "js": ["content.js"]
   }
-  ]
 }
