@@ -1,13 +1,13 @@
 body {
   font-family: Arial, sans-serif;
-  padding: 10px;
-  width: 250px;
+  padding: 2vw;
+  width: 91vw;
 }
 
 #sidebar {
-  background-color: #f4f4f4;
-  padding: 15px;
-  border-left: 2px solid #ccc;
+  background-color: #ffffff;
+  padding: 2vw;
+  /*border-left: 2px solid #ccc;*/
 }
 
 button {
