@@ -1,7 +1,9 @@
+/*
 // Close sidebar when button is clicked
 document.getElementById("closeBtn").addEventListener("click", () => {
-    document.getElementById("sidebar").style.display = "none";
+    window.close()
 });
+*/
 
 document.getElementById("timestampBtn").addEventListener("click", async () => {
     // Find the active tab in the current window
