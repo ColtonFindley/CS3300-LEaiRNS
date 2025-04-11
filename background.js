@@ -21,8 +21,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "UPDATE_TIMESTAMP") {
     console.log(`Updated timestamp received: ${message.timestamp}`);
   }
-  if (message.type === "openSidePanel") {
-    console.log(`ASCII ART`);
+  else if (message.type === "openSidePanel") {
     if (panelOpened) {
       chrome.sidePanel.setOptions({ enabled: false })
       panelOpened = false
@@ -38,10 +37,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           files: ['content.js']
         }).catch(err => console.error(err));
 
-      }
-      
+      } 
     }
-
   }
 });
 
@@ -63,7 +60,7 @@ function fuckyoutube(details){
     panelOpened = false
 
   }
-  if (details.url.includes("youtube.com/watch") && details.frameId === 0) {
+  if (details.url.includes("youtube.com/watch")) {
     btn = true
     chrome.scripting.executeScript({
       target: { tabId: details.tabId },
@@ -73,18 +70,18 @@ function fuckyoutube(details){
 };
 
 chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
-  fuckyoutube(details)
-  console.log("onHistory")
-  
+  if (details.frameId === 0) {
+    console.log("onHistory")
+    fuckyoutube(details)  
+  }
 });
  
  
 chrome.webNavigation.onCommitted.addListener((details) => {
-  console.log("onCommitted")
-
-  active = false
-
+  
   if (details.frameId === 0) {
-     fuckyoutube(details)
+    console.log("onCommitted")
+    active = false
+    fuckyoutube(details)
   }
 });
