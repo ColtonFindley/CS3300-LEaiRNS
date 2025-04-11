@@ -1,22 +1,90 @@
-chrome.action.onClicked.addListener((tab) => {
+/*chrome.action.onClicked.addListener((tab) => {
   if (!tab || !tab.url.includes('youtube.com/watch')) {
     console.log('This sidebar only works on YouTube video pages.');
     return;
   }
- 
-  // User‑gesture‑safe: open the side‑panel immediately
-  chrome.sidePanel.open({ tabId: tab.id });
- 
-  // Inject content.js *afterwards* (no await → still allowed)
+
+  // Makes button
   chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    files: ['content.js']
-  }).catch(err => console.error(err));
-});
+      target: { tabId: sender.tab.id },
+      files: ['content.js']
+    }).catch(err => console.error(err));
+  
+});*/
+
+var btn = false
+var panelOpened = false
+var active = false
 
 // Listen for timestamp updates from content.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "UPDATE_TIMESTAMP") {
     console.log(`Updated timestamp received: ${message.timestamp}`);
+  }
+  if (message.type === "openSidePanel") {
+    console.log(`ASCII ART`);
+    if (panelOpened) {
+      chrome.sidePanel.setOptions({ enabled: false })
+      panelOpened = false
+    } else {
+      chrome.sidePanel.setOptions({ enabled: true })
+      panelOpened = true
+      chrome.sidePanel.open({ tabId: sender.tab.id });
+      
+      if (!active){
+        active = true
+        chrome.scripting.executeScript({
+          target: { tabId: sender.tab.id },
+          files: ['content.js']
+        }).catch(err => console.error(err));
+
+      }
+      
+    }
+
+  }
+});
+
+function fuckyoutube(details){
+  if (btn) {
+    btn = false
+
+    chrome.scripting.executeScript({
+      target: { tabId: details.tabId },
+      func: () => {
+        const button = document.getElementById('side-button');
+        if (button) {
+          button.remove();
+        }
+      }
+    });
+
+    chrome.sidePanel.setOptions({ enabled: false })
+    panelOpened = false
+
+  }
+  if (details.url.includes("youtube.com/watch") && details.frameId === 0) {
+    btn = true
+    chrome.scripting.executeScript({
+      target: { tabId: details.tabId },
+      files: ['buttonscript.js']
+    }).catch(err => console.error(err));
+  }
+};
+
+chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
+  fuckyoutube(details)
+  console.log("onHistory")
+  
+});
+ 
+ 
+chrome.webNavigation.onCommitted.addListener((details) => {
+  console.log("onCommitted")
+
+  active = false
+
+  if (details.frameId === 0) {
+     fuckyoutube(details)
   }
 });
