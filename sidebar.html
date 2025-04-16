@@ -8,10 +8,16 @@
 </head>
 <body>
   <div id="sidebar">
-    <h2>My Sidebar</h2>
-    <p>This is a Chrome extension sidebar.</p>
-    <button id="timestampBtn">Get Timestamp</button>
-    <button id="closeBtn">Close</button>
+    <h2>Chatbox</h2>
+
+    <!-- Chatbox area -->
+    <div id="chatArea" style="max-height: 300px; overflow-y: auto; margin-bottom: 10px;">
+      <!-- Messages will appear here -->
+    </div>
+
+    <!-- Input area -->
+    <input type="text" id="messageInput" placeholder="Type your message..." />
+    <button id="sendMessageBtn">Send Message</button>        
   </div>
   <script src="sidebar.js"></script>
 </body>
