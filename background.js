@@ -1,30 +1,19 @@
-/*chrome.action.onClicked.addListener((tab) => {
-  if (!tab || !tab.url.includes('youtube.com/watch')) {
-    console.log('This sidebar only works on YouTube video pages.');
-    return;
-  }
+chrome.storage.session.setAccessLevel({ accessLevel: "TRUSTED_AND_UNTRUSTED_CONTEXTS" });
 
-  // Makes button
-  chrome.scripting.executeScript({
-      target: { tabId: sender.tab.id },
-      files: ['content.js']
-    }).catch(err => console.error(err));
-  
-});*/
-
-var btn = false
-var panelOpened = false
-var active = false
+// All of these could be var instead of let
+let btn = false
+let panelOpened = false
+let active = false
 
 // Listen for timestamp updates from content.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === "UPDATE_TIMESTAMP") {
-    console.log(`Updated timestamp received: ${message.timestamp}`);
-  }
-  else if (message.type === "openSidePanel") {
+  // If the recieved message is to open the sidepanel
+  if (message.type === "openSidePanel") {
+    // If the panel is already opened (message is to close the side panel)
     if (panelOpened) {
       chrome.sidePanel.setOptions({ enabled: false })
       panelOpened = false
+    // If the side panel is not already opened
     } else {
       chrome.sidePanel.setOptions({ enabled: true })
       panelOpened = true
@@ -39,10 +28,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       } 
     }
-  }
+    // If the recieved message is related to the chatbox send message
+  } else if (message.type == "CUSTOM_MESSAGE") {
+    const response = `You said: "${message.payload}"`; // You can customize the response as needed
+    console.log(`Updated timestamp received: ${message.timestamp}`);
+    chrome.runtime.sendMessage({ type: "CUSTOM_RESPONSE", payload: response });  }
 });
 
-function fuckyoutube(details){
+function toggle(details){
   if (btn) {
     btn = false
 
@@ -72,16 +65,22 @@ function fuckyoutube(details){
 chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
   if (details.frameId === 0) {
     console.log("onHistory")
-    fuckyoutube(details)  
+    toggle(details)  
   }
 });
- 
  
 chrome.webNavigation.onCommitted.addListener((details) => {
   
   if (details.frameId === 0) {
     console.log("onCommitted")
     active = false
-    fuckyoutube(details)
+    toggle(details)
   }
+});
+
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  // Disable/hide the side panel when a new tab is activated.
+  chrome.sidePanel.setOptions({ enabled: false })
+  panelOpened = false
+
 });
