@@ -1,8 +1,10 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.command === "getCurrentTime") {
-    chrome.storage.local.get({ lastTimestamp: 0 }, ({ lastTimestamp }) => {
-      chrome.runtime.sendMessage({ type: "UPDATE_TIMESTAMP", timestamp: lastTimestamp });
-    });
+    const videoElement = document.querySelector("video");
+    if (videoElement) {
+      const timestamp = Math.floor(videoElement.currentTime);  // Get the current timestamp
+      sendResponse({ timestamp: timestamp });  // Send the timestamp back
+    }
   }
 });
 
@@ -19,7 +21,7 @@ function sendTimestampUpdate() {
     const videoElement = document.querySelector("video");
     if (videoElement) {
       const tmsp = Math.floor(videoElement.currentTime);
-      chrome.storage.local.set({ lastTimestamp: tmsp });
+      chrome.storage.session.set({ lastTimestamp: tmsp });
     }
 };
 
