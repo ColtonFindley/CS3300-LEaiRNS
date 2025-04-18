@@ -20,6 +20,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       chrome.sidePanel.open({ tabId: sender.tab.id });
       
       if (!active){
+        if (!location.href.startsWith("https://www.youtube.com/")) { return};
         active = true
         chrome.scripting.executeScript({
           target: { tabId: sender.tab.id },
@@ -40,15 +41,17 @@ function toggle(details){
   if (btn) {
     btn = false
 
-    chrome.scripting.executeScript({
-      target: { tabId: details.tabId },
-      func: () => {
-        const button = document.getElementById('side-button');
-        if (button) {
-          button.remove();
+    if (details.url.includes("youtube.com/watch")) {
+      chrome.scripting.executeScript({
+        target: { tabId: details.tabId },
+        func: () => {
+          const button = document.getElementById('side-button');
+          if (button) {
+            button.remove();
+          }
         }
-      }
-    });
+      }).catch(err => console.error("Failed to remove button", details.url, err));
+    }
 
     chrome.sidePanel.setOptions({ enabled: false })
     panelOpened = false
@@ -59,13 +62,12 @@ function toggle(details){
     chrome.scripting.executeScript({
       target: { tabId: details.tabId },
       files: ['buttonscript.js']
-    }).catch(err => console.error(err));
+    }).catch(err => console.error("Failed to execute buttonscript", details.tab.url, err));
   }
 };
 
 chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
   if (details.frameId === 0) {
-    console.log("onHistory")
     toggle(details)  
   }
 });
@@ -73,7 +75,6 @@ chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
 chrome.webNavigation.onCommitted.addListener((details) => {
   
   if (details.frameId === 0) {
-    console.log("onCommitted")
     active = false
     toggle(details)
   }
