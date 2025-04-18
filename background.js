@@ -20,7 +20,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       chrome.sidePanel.open({ tabId: sender.tab.id });
       
       if (!active){
-        if (!location.href.startsWith("https://www.youtube.com/")) { return};
         active = true
         chrome.scripting.executeScript({
           target: { tabId: sender.tab.id },
@@ -31,7 +30,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     // If the recieved message is related to the chatbox send message
   } else if (message.type == "CUSTOM_MESSAGE") {
-    const response = `You said: "${message.payload}"`; // You can customize the response as needed
+    const response = message.payload; // You can customize the response as needed
     console.log(`Updated timestamp received: ${message.timestamp}`);
     chrome.runtime.sendMessage({ type: "CUSTOM_RESPONSE", payload: response });  
   }
