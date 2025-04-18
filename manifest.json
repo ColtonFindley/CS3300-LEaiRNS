@@ -1,10 +1,12 @@
 {
   "manifest_version": 3,
   "name": "YouTube Sidebar Extension",
-  "version": "4.1",
-  "description": "A sidebar extension that only works on YouTube. Added a text box to send messages. Send message button also sends the timestamp",
+  "version": "5.02",
+  "description": "A sidebar extension that only works on YouTube. Implemented the Gemini API to send a hard coded message",
   "permissions": ["sidePanel", "scripting", "activeTab", "storage", "tabs", "webNavigation"],
-  "host_permissions": ["https://www.youtube.com/*"],
+  "host_permissions": [
+    "https://www.youtube.com/*"
+  ],
   "background": {
     "service_worker": "background.js"
   },
