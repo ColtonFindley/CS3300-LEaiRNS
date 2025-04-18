@@ -1,5 +1,6 @@
 // Create a button element
 function createSideButton() {
+
   const sideButton = document.createElement('div');
   sideButton.id = 'side-button';
   // Style the button: adjust size, position, and appearance as needed
