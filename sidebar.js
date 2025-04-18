@@ -33,7 +33,12 @@ document.getElementById("sendMessageBtn").addEventListener("click", async () => 
 chrome.runtime.onMessage.addListener((message) => {
     if (message.type === "CUSTOM_RESPONSE") {
        
- 
+        const msg = message.payload;
+        const tmp = message.timestamp;
+
+        // !!! ADD RESTRICTION ON USER MESSAGE LENGTH
+
+
         fetch(GEMINI_API_URL, {
             method: "POST",
             headers: {
@@ -42,29 +47,23 @@ chrome.runtime.onMessage.addListener((message) => {
             body: JSON.stringify({
                 contents: [{
                     parts: [
-                        { text: "Can you summarize this video?" },
-                        {
-                            file_data: {
-                                file_uri: "https://www.youtube.com/watch?v=SDpCzJw2xm4"
-                            }
+                        { text: msg
+                        //    file_data: {
+                        //      file_uri: "https://www.youtube.com/watch?v=SDpCzJw2xm4"
+                        //    }
                         }
                     ]
                 }]
             }),
         })
         .then((response) => {
-            console.log("In response");
             return response.json();
         })
         .then((result) => {
-            console.log("In result: ", result);
             const reply = result.candidates[0].content.parts[0].text;
-            console.log("Gemini says:", reply);
+            appendMessage('Gemini', reply);
         });
- 
- 
-        appendMessage('Bot', message.payload);
-    }
+     }
 });
  
 // Function to append messages to the chat area
