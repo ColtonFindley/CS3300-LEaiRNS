@@ -9,15 +9,16 @@
 <body>
   <div id="sidebar">
     <h2>Chatbox</h2>
-
+  
     <!-- Chatbox area -->
-    <div id="chatArea" style="max-height: 300px; overflow-y: auto; margin-bottom: 10px;">
-      <!-- Messages will appear here -->
-    </div>
-
+    <div id="chatArea"></div>
+  
     <!-- Input area -->
-    <input type="text" id="messageInput" placeholder="Type your message..." />
-    <button id="sendMessageBtn">Send Message</button>        
+    <div id="inputContainer">
+      <input type="text" id="messageInput" placeholder="Type your message..." />
+      <button id="sendMessageBtn">Send Message</button>
+    </div> 
+ 
   </div>
   <script src="sidebar.js"></script>
 </body>
