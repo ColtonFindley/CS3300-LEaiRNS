@@ -32,7 +32,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } else if (message.type == "CUSTOM_MESSAGE") {
     const response = message.payload; // You can customize the response as needed
     console.log(`Updated timestamp received: ${message.timestamp}`);
-    chrome.runtime.sendMessage({ type: "CUSTOM_RESPONSE", payload: response });  
+
+    chrome.runtime.sendMessage({ 
+      type: "CUSTOM_RESPONSE", 
+      payload: response,
+      timestamp: message.timestamp,
+      youtube: message.youtube
+    });
+      
   }
 });
 
