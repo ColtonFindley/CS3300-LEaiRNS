@@ -1,12 +1,16 @@
 const GEMINI_API_KEY = "API KEY";
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
  
+var context = ""
+
 document.getElementById("sendMessageBtn").addEventListener("click", async () => {
     const message = document.getElementById("messageInput").value;
    
     // Find the active tab in the current window to get the current time
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab) return;
+
+    const url = tab.url
  
     // Send the message and the timestamp to the background script
     chrome.tabs.sendMessage(tab.id, { command: "getCurrentTime" }, (response) => {
@@ -15,14 +19,12 @@ document.getElementById("sendMessageBtn").addEventListener("click", async () => 
         chrome.runtime.sendMessage({
             type: "CUSTOM_MESSAGE",
             payload: message,
-            timestamp: timestamp
+            timestamp: timestamp,
+            youtube: url
         });
  
         // Display the sent message in the chatbox without showing the timestamp
         appendMessage('You', message);
- 
-        // Log the timestamp to the background console as well
-        console.log(`Timestamp sent: ${timestamp}`);
  
         // Clear the text box after sending the message
         document.getElementById("messageInput").value = '';
@@ -35,6 +37,8 @@ chrome.runtime.onMessage.addListener((message) => {
        
         const msg = message.payload;
         const tmp = message.timestamp;
+        const yt = message.youtube
+        
 
         // !!! ADD RESTRICTION ON USER MESSAGE LENGTH
 
@@ -47,12 +51,9 @@ chrome.runtime.onMessage.addListener((message) => {
             body: JSON.stringify({
                 contents: [{
                     parts: [
-                        { text: msg
-                        //    file_data: {
-                        //      file_uri: "https://www.youtube.com/watch?v=SDpCzJw2xm4"
-                        //    }
-                        }
-                    ]
+                        { text: msg },
+                        {file_data: {file_uri: yt}}
+                      ]
                 }]
             }),
         })
