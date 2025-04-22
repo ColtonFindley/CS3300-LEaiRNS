@@ -1,7 +1,6 @@
 const GEMINI_API_KEY = "API_KEY";
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
  
-var context = ""
 let buffer = true // Disables the button until Gemini is done writing a response
  
 document.getElementById("sendMessageBtn").addEventListener("click", async () => {
@@ -57,8 +56,8 @@ chrome.runtime.onMessage.addListener((message) => {
             body: JSON.stringify({
                 contents: [{
                     parts: [
-                        { text: "Don't mentioned this in your response: formulate the response to only include information before this timestamp: "
-                            + timestamp + " Here is the message to respond to: " + msg},
+                        { text: "Don't mention this in your response: the following message is a question from the user who is currently watching the attached youtube video. They are currently at "
+                            + timestamp + " in the video. Here is their message to respond to: " + msg},
                         {file_data: {file_uri: yt}}
                     ]
                 }]
