@@ -1,6 +1,8 @@
-// Create a button element
-function createSideButton() {
 
+function createSideButton() {
+// this script just creates the button element on the page that toggles the side panel.
+
+  
   const sideButton = document.createElement('div');
   sideButton.id = 'side-button';
   // Style the button: adjust size, position, and appearance as needed
@@ -21,9 +23,11 @@ function createSideButton() {
   // Set up the click event to send a message to the background script
   sideButton.addEventListener('click', () => {
       chrome.runtime.sendMessage({ type: "openSidePanel", msg: "grrrr" });
+    //the content of this message sent my this event is entirely unneccesary.
+    //this is an archiac implementation based on an older design of our product.
   });
 
-  // Append the button to the page body
+  // Add the button to the page
   document.body.appendChild(sideButton);
 }
 
