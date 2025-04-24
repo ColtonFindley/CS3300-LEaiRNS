@@ -1,12 +1,16 @@
 const GEMINI_API_KEY = "API_KEY";
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
+const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
  
-let buffer = true // Disables the button until Gemini is done writing a response
+let buffer = true // Disables the button when false
  
 document.getElementById("sendMessageBtn").addEventListener("click", async () => {
    
     if (!buffer) return;
     buffer = false;
+    const sendButton = document.getElementById("sendMessageBtn");
+    const messageInput = document.getElementById("messageInput");
+    sendButton.disabled = true
+    messageInput.disabled = true
  
     const message = document.getElementById("messageInput").value;
    
@@ -64,13 +68,28 @@ chrome.runtime.onMessage.addListener((message) => {
             }),
         })
         .then(response => { 
+            if (!response.ok){
+                throw new Error(`Gemini error, HTTP code: ${response.status}`);
+            }
             return response.json();
         })
         .then((result) => {
+            if (!result?.candidates?.[0]?.content?.parts?.[0]?.text) {
+                throw new Error("Unexpected response structure");
+            }
             const reply = result.candidates[0].content.parts[0].text;
             appendMessage('Gemini', reply);
             buffer = true
+
+            const sendButton = document.getElementById("sendMessageBtn");
+            const messageInput = document.getElementById("messageInput");
+            sendButton.disabled = false
+            messageInput.disabled = false
         })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            appendMessage('Gemini', `Sorry, there was an error processing your request. Error: ${error.message}.`);
+        });
      }
 });
  
