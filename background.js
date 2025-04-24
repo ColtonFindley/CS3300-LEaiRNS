@@ -30,8 +30,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     // If the recieved message is related to the chatbox send message
   } else if (message.type == "CUSTOM_MESSAGE") {
-    const response = message.payload; // You can customize the response as needed
-    console.log(`Updated timestamp received: ${message.timestamp}`);
+    const response = message.payload;
 
     chrome.runtime.sendMessage({ 
       type: "CUSTOM_RESPONSE", 
