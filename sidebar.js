@@ -1,3 +1,12 @@
+/*
+* Copyright (c) 2025 Colton Findley, Daniel Hettich, Devon White
+*
+* This software is released under the MIT License.
+* https://opensource.org/licenses/MIT
+*/
+
+
+
 const GEMINI_API_KEY = "API_KEY";
 //if you would plan to modify this code and upload it to the chrome webstore, you would need to modify the code to hide the api key better
 //due to how chrome extensions work, a user can always inspect the source code of the chrome extension
