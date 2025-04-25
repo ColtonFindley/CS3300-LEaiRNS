@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "LEaiRNS",
   "version": "6.0",
-  "description": "Adds Gemini located in a side panel on YouTube videos that answers questions with based on the content of the video before the current timestamp when prompted",
+  "description": "Adds Gemini located in a side panel on YouTube videos that answers questions based on the content of the video before the current timestamp when prompted",
   "permissions": ["sidePanel", "scripting", "activeTab", "storage", "tabs", "webNavigation"],
   "host_permissions": [
     "https://www.youtube.com/*"
