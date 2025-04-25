@@ -1,4 +1,9 @@
-
+/*
+* Copyright (c) 2025 Colton Findley, Daniel Hettich, Devon White
+*
+* This software is released under the MIT License.
+* https://opensource.org/licenses/MIT
+*/
 
 //This content script pulls the timestamp from the video element of the page and saves it
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
