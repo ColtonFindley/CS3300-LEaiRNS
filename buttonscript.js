@@ -1,3 +1,10 @@
+/*
+* Copyright (c) 2025 Colton Findley, Daniel Hettich, Devon White
+*
+* This software is released under the MIT License.
+* https://opensource.org/licenses/MIT
+*/
+
 
 function createSideButton() {
 // this script just creates the button element on the page that toggles the side panel.
