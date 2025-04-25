@@ -1,3 +1,11 @@
+/*
+* Copyright (c) 2025 Colton Findley, Daniel Hettich, Devon White
+*
+* This software is released under the MIT License.
+* https://opensource.org/licenses/MIT
+*/
+
+
 chrome.storage.session.setAccessLevel({ accessLevel: "TRUSTED_AND_UNTRUSTED_CONTEXTS" });
 //this is requried so that we can use chrome.storage.session in content scripts. 
 
