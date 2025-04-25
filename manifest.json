@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Sidebar Extension",
+  "name": "LEaiRNS",
   "version": "6.0",
-  "description": "A sidebar extension that only works on YouTube. Implemented the Gemini API to send a hard coded message",
+  "description": "Adds Gemini located in a side panel on YouTube videos that answers questions with based on the content of the video before the current timestamp when prompted",
   "permissions": ["sidePanel", "scripting", "activeTab", "storage", "tabs", "webNavigation"],
   "host_permissions": [
     "https://www.youtube.com/*"
