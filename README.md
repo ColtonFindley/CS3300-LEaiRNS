@@ -24,17 +24,21 @@ LEaiRNS is an open-source chrome extension that will prompt the Gemini API for q
 
 ## Installation 
 
-Step 1: Download all the required files for the chrome extension – manifest.json, background.js, buttonscript.js, content.js, sidebar.js, sidebar.html, sidebar.css 
+Step 1: Download all the required files for the chrome extension from the GitHub – manifest.json, background.js, buttonscript.js, content.js, sidebar.js, sidebar.html, sidebar.css 
 
-Step 2: Store all of these files in a folder. 
+Step 2: Obtain your own Google Gemini API key. (Obtain Gemini API Keys)  
 
-Step 3: Navigate to chrome://extensions/ on a Chrome browser. 
+Step 3: In sidebar.js, on line 10, replace “API_KEY” with your own API key (surrounded by double quotes).   
 
-Step 4: At the top right, turn on Developer Mode. 
+Step 4: Store all these files in a new folder. 
 
-Step 5: Click Load unpacked. 
+Step 5: Navigate to chrome://extensions/ on a Chrome browser. 
 
-Step 6: Find and select the extension folder.
+Step 6: In the top right of the screen, enable “Developer mode”. 
+
+Step 7: In the top left of the screen, click “Load unpacked”. 
+
+Step 8: Select the folder you created containing the files for the extension. 
 
 ## Known Bugs / Flaws 
 
